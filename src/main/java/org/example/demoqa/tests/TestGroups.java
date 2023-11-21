@@ -1,4 +1,4 @@
-package org.example.tests;
+package org.example.demoqa.tests;
 
 public class TestGroups {
     public static final String REGRESSION = "REGRESSION";

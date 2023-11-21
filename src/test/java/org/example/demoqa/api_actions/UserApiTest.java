@@ -1,4 +1,4 @@
-package org.example.api_actions;
+package org.example.demoqa.api_actions;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;

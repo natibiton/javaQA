@@ -1,4 +1,4 @@
-package org.example.modules;
+package org.example.demoqa.modules;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package org.example.web;
+package org.example.demoqa.web;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.Getter;

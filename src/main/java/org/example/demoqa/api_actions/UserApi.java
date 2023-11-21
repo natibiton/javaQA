@@ -1,8 +1,8 @@
-package org.example.api_actions;
+package org.example.demoqa.api_actions;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.example.modules.User;
+import org.example.demoqa.modules.User;
 
 public class UserApi extends BaseApiActions{
     public User createUser(String userName, String password){

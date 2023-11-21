@@ -1,9 +1,9 @@
-package org.example.api_actions;
+package org.example.demoqa.api_actions;
 
 import io.restassured.response.Response;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.example.modules.User;
+import org.example.demoqa.modules.User;
 
 import java.util.HashMap;
 import java.util.Map;

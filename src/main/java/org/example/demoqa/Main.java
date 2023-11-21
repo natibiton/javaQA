@@ -1,11 +1,10 @@
-package org.example;
+package org.example.demoqa;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.example.api_actions.UserApi;
-import org.example.modules.User;
-import org.example.web.BaseWebDriver;
-import org.example.web.pages.BooksPage;
+import org.example.demoqa.modules.User;
+import org.example.demoqa.web.BaseWebDriver;
+import org.example.demoqa.web.pages.BooksPage;
 
 @Slf4j
 public class Main {
