@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+<suite name="Test Cases for Sanity flow" verbose="1" thread-count="16">
+
+    <test name="API Suite">
+        <groups>
+            <run>
+                <include name="API"/>
+            </run>
+        </groups>
+        <packages>
+            <package name="org.example.tests.*"/>
+        </packages>
+    </test>
+</suite>
