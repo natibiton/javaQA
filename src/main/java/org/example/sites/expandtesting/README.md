@@ -17,7 +17,8 @@ Using UI: https://practice.expandtesting.com/notes/app/
 10. Via API: Update a note
 11. Via selenium: Validate updated note
 12. Get and update user profile
-12. Via API: User logout
+13. Via API: User logout
+14. Via API: Delete user
 
 ## TODO
 1. UT
