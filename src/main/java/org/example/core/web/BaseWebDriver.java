@@ -1,4 +1,4 @@
-package org.example.demoqa.web;
+package org.example.core.web;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.Getter;
@@ -21,6 +21,8 @@ public class BaseWebDriver {
         // For the issue of SocketException connection reset
         webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+
+        webDriver.manage().window().fullscreen();
     }
 
     /**
@@ -29,4 +31,7 @@ public class BaseWebDriver {
     public void quitDriver(){
         webDriver.quit();
     }
+
+    public void takeScreenshot(){}
+
 }

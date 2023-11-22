@@ -1,8 +1,8 @@
-package org.example.demoqa.api_actions;
+package org.example.sites.demoqa.api_actions;
 
 import io.restassured.response.Response;
-import org.example.demoqa.modules.Token;
-import org.example.demoqa.modules.User;
+import org.example.sites.demoqa.modules.Token;
+import org.example.sites.demoqa.modules.User;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.Map;

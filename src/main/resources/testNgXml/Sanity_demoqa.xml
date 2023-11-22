@@ -8,7 +8,7 @@
             </run>
         </groups>
         <packages>
-            <package name="org.example.sites.expandtesting.tests.*"/>
+            <package name="org.example.sites.demoqa.tests.*"/>
         </packages>
     </test>
 </suite>

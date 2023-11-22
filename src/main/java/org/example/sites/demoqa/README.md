@@ -1,4 +1,5 @@
-# JAVA QA
+# DEMOQA site
+Note: The site is no longer functional, just kept the code here for the time being. 
 
 ## Resources
 Using (https://demoqa.com/swagger/None#/

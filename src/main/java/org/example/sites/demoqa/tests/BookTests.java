@@ -1,7 +1,8 @@
-package org.example.demoqa.tests;
+package org.example.sites.demoqa.tests;
 
-import org.example.demoqa.api_actions.BooksApi;
-import org.example.demoqa.modules.Book;
+import org.example.core.tests.TestGroups;
+import org.example.sites.demoqa.api_actions.BooksApi;
+import org.example.sites.demoqa.modules.Book;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

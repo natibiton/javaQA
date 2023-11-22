@@ -1,9 +1,9 @@
-package org.example.demoqa.api_actions;
+package org.example.sites.demoqa.api_actions;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.example.demoqa.modules.Token;
-import org.example.demoqa.modules.User;
+import org.example.sites.demoqa.modules.Token;
+import org.example.sites.demoqa.modules.User;
 
 public class TokenApi extends BaseApiActions{
     public Token createToken(User user){

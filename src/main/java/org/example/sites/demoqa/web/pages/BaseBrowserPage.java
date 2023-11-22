@@ -1,4 +1,4 @@
-package org.example.demoqa.web.pages;
+package org.example.sites.demoqa.web.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;

@@ -1,13 +1,14 @@
-package org.example.demoqa.tests;
+package org.example.sites.demoqa.tests;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.example.demoqa.api_actions.AuthorizedApi;
-import org.example.demoqa.api_actions.BooksApi;
-import org.example.demoqa.api_actions.TokenApi;
-import org.example.demoqa.api_actions.UserApi;
-import org.example.demoqa.modules.Book;
-import org.example.demoqa.modules.Token;
-import org.example.demoqa.modules.User;
+import org.example.core.tests.TestGroups;
+import org.example.sites.demoqa.api_actions.AuthorizedApi;
+import org.example.sites.demoqa.api_actions.BooksApi;
+import org.example.sites.demoqa.api_actions.TokenApi;
+import org.example.sites.demoqa.api_actions.UserApi;
+import org.example.sites.demoqa.modules.Book;
+import org.example.sites.demoqa.modules.Token;
+import org.example.sites.demoqa.modules.User;
 import org.testng.annotations.Test;
 
 import java.util.AbstractMap;

@@ -1,12 +1,13 @@
-package org.example.demoqa.tests;
+package org.example.sites.demoqa.tests;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.assertj.core.api.Assertions;
-import org.example.demoqa.api_actions.AuthorizedApi;
-import org.example.demoqa.api_actions.TokenApi;
-import org.example.demoqa.api_actions.UserApi;
-import org.example.demoqa.modules.Token;
-import org.example.demoqa.modules.User;
+import org.example.core.tests.TestGroups;
+import org.example.sites.demoqa.api_actions.AuthorizedApi;
+import org.example.sites.demoqa.api_actions.TokenApi;
+import org.example.sites.demoqa.api_actions.UserApi;
+import org.example.sites.demoqa.modules.Token;
+import org.example.sites.demoqa.modules.User;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

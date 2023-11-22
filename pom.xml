@@ -78,7 +78,12 @@
             <scope>test</scope>
         </dependency>
 
-
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-java-commons -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId> <!-- For report @Step and @Attachment -->
+            <artifactId>allure-java-commons</artifactId>
+            <version>2.24.0</version>
+        </dependency>
 
     </dependencies>
 

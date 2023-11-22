@@ -1,7 +1,7 @@
-package org.example.demoqa.web.pages;
+package org.example.sites.demoqa.web.pages;
 
 import lombok.Getter;
-import org.example.demoqa.modules.User;
+import org.example.sites.demoqa.modules.User;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
