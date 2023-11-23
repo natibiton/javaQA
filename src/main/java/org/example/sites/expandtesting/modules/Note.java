@@ -1,5 +1,6 @@
 package org.example.sites.expandtesting.modules;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,10 +17,13 @@ public class Note {
     private String title;
     private String description;
     private boolean completed;
-    private Date created_at;
-    private Date updated_at;
+    @JsonProperty("created_at")
+    private Date createdAt;
+    @JsonProperty("updated_at")
+    private Date updatedAt;
     private String Category;
-    private String user_id;
+    @JsonProperty("user_id")
+    private String userId;
 
     public enum Category{
         Home, Work, Personal;
