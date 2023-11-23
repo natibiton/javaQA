@@ -13,10 +13,23 @@ public class User {
     @Setter
     private String email;
     @Getter
+    @Setter
     private String password;
     @Getter
     @Setter
     private String id;
+    @Getter
+    @Setter
+    /**
+     * The Login token of the user
+     */
+    private String token;
+    @Getter
+    @Setter
+    private String phone;
+    @Getter
+    @Setter
+    private String company;
 
     public User(){
         generateRandomUser();
@@ -28,9 +41,4 @@ public class User {
         this.email = name.toLowerCase() + "@gmail.com";
     }
 
-    public void setPassword(String password){
-        if (this.password == null){
-            this.password = password;
-        }
-    }
 }
