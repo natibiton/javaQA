@@ -5,30 +5,18 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 @EqualsAndHashCode
 @ToString
+@Getter
+@Setter
 public class User {
-    @Getter
-    @Setter
     private String name;
-    @Getter
-    @Setter
     private String email;
-    @Getter
-    @Setter
     private String password;
-    @Getter
-    @Setter
     private String id;
-    @Getter
-    @Setter
     /**
      * The Login token of the user
      */
     private String token;
-    @Getter
-    @Setter
     private String phone;
-    @Getter
-    @Setter
     private String company;
 
     public User(){
