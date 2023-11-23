@@ -9,7 +9,6 @@ import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
 
-//TODO refactor by usage of methods
 public class BaseApiActions extends BaseAbstractApiActions {
     private final String USERS_PATH = "users/";
 
