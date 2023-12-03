@@ -2,6 +2,7 @@ package org.example.sites.expandtesting.api_actions;
 
 import io.restassured.response.Response;
 import org.example.core.api_actions.BaseAbstractApiActions;
+import org.example.sites.expandtesting.modules.Note;
 import org.example.sites.expandtesting.modules.User;
 
 import java.util.Map;
@@ -11,6 +12,7 @@ import static io.restassured.RestAssured.given;
 
 public class BaseApiActions extends BaseAbstractApiActions {
     private final String USERS_PATH = "users/";
+    private final String NOTES_PATH = "notes/";
 
     public BaseApiActions() {
         super("https://practice.expandtesting.com/notes/api/");
@@ -30,6 +32,16 @@ public class BaseApiActions extends BaseAbstractApiActions {
                 .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
                 .body(user)
                 .when().post(this.baseEndPoint  + USERS_PATH + resourcePath);
+        response.then().statusCode(expectedStatusCode);
+
+        return response;
+    }
+
+    public Response invokeNotePost(Map<String, String> headers, String resourcePath, Note note, int expectedStatusCode){
+        Response response = given()
+                .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
+                .body(note)
+                .when().post(this.baseEndPoint  + NOTES_PATH + resourcePath);
         response.then().statusCode(expectedStatusCode);
 
         return response;
