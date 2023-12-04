@@ -4,6 +4,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 import org.example.sites.expandtesting.modules.Note;
+import org.example.sites.expandtesting.modules.User;
 import org.testng.Assert;
 
 import java.util.List;
@@ -34,15 +35,25 @@ public class NotesApi extends BaseApiActions {
         return responseNote;
     }
 
-    public List<Note> getAllNotes(){
-        return null;
+    public List<Note> getAllNotes(User inputUser){
+        Response response = invokeNoteGet(null, "", inputUser.getToken(), 200);
+        JsonPath jsonPath = response.jsonPath();
+        List<Note> responseNotes = jsonPath.getList("data", Note.class);
+        return responseNotes;
     }
 
-    public Note getNote(Note inputNote){
-        return null;
+    public Note getNote(User inputUser, Note inputNote){
+        Response response = invokeNoteGetSpecific(null, inputNote.getId(), inputUser.getToken(), 200);
+        JsonPath jsonPath = response.jsonPath();
+        Note responseNote = jsonPath.getObject("data", Note.class);
+
+        Assert.assertNotNull(responseNote);
+
+        return responseNote;
     }
 
     public Note updateNote(Note inputNote){
+
         return null;
     }
 

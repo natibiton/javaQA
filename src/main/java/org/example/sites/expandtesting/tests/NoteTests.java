@@ -9,7 +9,10 @@ import org.example.sites.expandtesting.api_actions.NotesApi;
 import org.example.sites.expandtesting.api_actions.UsersApi;
 import org.example.sites.expandtesting.modules.Note;
 import org.example.sites.expandtesting.modules.User;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 public class NoteTests extends BaseTest {
     /**
@@ -33,12 +36,25 @@ public class NoteTests extends BaseTest {
     }
 
     @Test(groups = {TestGroups.API, TestGroups.SANITY }, priority = 1)
-    public void createUserAndLogin() {
+    public void createNote() {
         NotesApi notesApi = new NotesApi();
         Note note = new Note();
         Note responseNote = notesApi.createNote(note, testUser.getToken());
 
         System.out.println("Created note is: " + responseNote);
+
+        Note getResponseNote = notesApi.getNote(testUser, responseNote);
+        System.out.println(String.format("Note from application by {} id is {}", testUser.getId(), getResponseNote));
+    }
+
+    @Test(groups = {TestGroups.API, TestGroups.SANITY }, priority = 2)
+    public void getAllNotes() {
+        NotesApi notesApi = new NotesApi();
+        List<Note> responseNotes = notesApi.getAllNotes(testUser);
+
+        System.out.println("Note list size is " + responseNotes.size());
+
+        Assert.assertEquals(responseNotes.size(), 1);
     }
 
 }
