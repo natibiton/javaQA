@@ -18,6 +18,9 @@ public class NotesApi extends BaseApiActions {
         JsonPath jsonPath = response.jsonPath();
         Note responseNote = jsonPath.getObject("data", Note.class);
 
+        String message = jsonPath.get("message");
+        Assert.assertEquals(message, "Successful Request");
+
         Assert.assertNotNull(responseNote.getId(), "The ID field can't be empty for note creation");
         Assert.assertNotNull(responseNote.getCreatedAt(), "The creation date field can't be empty for note creation");
         Assert.assertNotNull(responseNote.getUpdatedAt(), "The update date field can't be empty for note creation");
@@ -39,6 +42,10 @@ public class NotesApi extends BaseApiActions {
         Response response = invokeNoteGet(null, "", inputUser.getToken(), 200);
         JsonPath jsonPath = response.jsonPath();
         List<Note> responseNotes = jsonPath.getList("data", Note.class);
+
+        String message = jsonPath.get("message");
+        Assert.assertEquals(message, "Notes successfully retrieved");
+
         return responseNotes;
     }
 
@@ -47,22 +54,47 @@ public class NotesApi extends BaseApiActions {
         JsonPath jsonPath = response.jsonPath();
         Note responseNote = jsonPath.getObject("data", Note.class);
 
+        String message = jsonPath.get("message");
+        Assert.assertEquals(message, "Successful Request");
+
         Assert.assertNotNull(responseNote);
 
         return responseNote;
     }
 
-    public Note updateNote(Note inputNote){
+    public Note updateNote(User inputUser, Note inputNote){
+        Response response = invokeNotePut(null, inputNote.getId(), inputNote, inputUser.getToken(), 200);
+        JsonPath jsonPath = response.jsonPath();
+        Note responseNote = jsonPath.getObject("data", Note.class);
 
-        return null;
+        String message = jsonPath.get("message");
+        Assert.assertEquals(message, "Successful Request");
+
+        Assertions.assertThat(responseNote).usingRecursiveComparison().comparingOnlyFields("title", "description", "category", "completed").isEqualTo(inputNote);
+
+        return responseNote;
     }
 
-    public Note updateNoteStatus(Note inputNote){
-        return null;
+    public Note updateNoteStatus(User inputUser,Note inputNote){
+        Response response = invokeNotePatch(null, inputNote.getId(), inputNote, inputUser.getToken(), 200);
+        JsonPath jsonPath = response.jsonPath();
+        Note responseNote = jsonPath.getObject("data", Note.class);
+
+        String message = jsonPath.get("message");
+        Assert.assertEquals(message, "Note successfully updated");
+
+        Assertions.assertThat(responseNote).usingRecursiveComparison().comparingOnlyFields("title", "description", "category", "completed", "user_id").isEqualTo(inputNote);
+
+        return responseNote;
     }
 
-    public void deleteNote(Note inputNote){
+    public void deleteNote(User inputUser,Note inputNote){
+        Response response = invokeNoteDelete(null, inputNote.getId(), inputUser.getToken(), 200);
+        JsonPath jsonPath = response.jsonPath();
 
+        String message = jsonPath.get("message");
+        Assert.assertEquals(message, "Successful Request");
+        Assert.assertEquals(jsonPath.getBoolean("success"), Boolean.TRUE);
     }
 
 }

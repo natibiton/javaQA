@@ -59,6 +59,26 @@ public class BaseApiActions extends BaseAbstractApiActions {
         return response;
     }
 
+    /**
+     *
+     * @param headers
+     * @param resourcePath The note id
+     * @param token
+     * @param expectedStatusCode
+     * @return
+     */
+    public Response invokeNoteDelete(Map<String, String> headers, String resourcePath, String token, int expectedStatusCode){
+        Map<String, String> headersWithToken = this.getHeaders();
+        headersWithToken.put("x-auth-token", token);
+
+        Response response = given()
+                .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
+                .when().delete(this.baseEndPoint  + NOTES_PATH + resourcePath);
+        response.then().statusCode(expectedStatusCode);
+
+        return response;
+    }
+
     public Response invokeUserGet(Map<String, String> headers, String resourcePath, String token, int expectedStatusCode){
         Map<String, String> headersWithToken = this.getHeaders();
         headersWithToken.put("x-auth-token", token);
@@ -98,6 +118,41 @@ public class BaseApiActions extends BaseAbstractApiActions {
         Response response = given()
                 .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
                 .when().get(this.baseEndPoint  + NOTES_PATH + resourcePath);
+        response.then().statusCode(expectedStatusCode);
+
+        return response;
+    }
+
+    /**
+     *
+     * @param headers
+     * @param resourcePath The note id
+     * @param note
+     * @param token
+     * @param expectedStatusCode
+     * @return
+     */
+    public Response invokeNotePut(Map<String, String> headers, String resourcePath, Note note, String token, int expectedStatusCode){
+        Map<String, String> headersWithToken = this.getHeaders();
+        headersWithToken.put("x-auth-token", token);
+
+        Response response = given()
+                .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
+                .body(note)
+                .when().put(this.baseEndPoint  + NOTES_PATH + resourcePath);
+        response.then().statusCode(expectedStatusCode);
+
+        return response;
+    }
+
+    public Response invokeNotePatch(Map<String, String> headers, String resourcePath, Note note, String token, int expectedStatusCode){
+        Map<String, String> headersWithToken = this.getHeaders();
+        headersWithToken.put("x-auth-token", token);
+
+        Response response = given()
+                .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
+                .body(note)
+                .when().patch(this.baseEndPoint  + NOTES_PATH + resourcePath);
         response.then().statusCode(expectedStatusCode);
 
         return response;
