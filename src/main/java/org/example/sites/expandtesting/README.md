@@ -25,4 +25,4 @@ Using UI: https://practice.expandtesting.com/notes/app/
 2. Logging
 3. Run TestNG with maven
 4. Test Report with screenshots (see https://www.browserstack.com/docs/automate/selenium/take-screenshots#automatically-capture-screenshots)
-5. Modify to spring project
+5. Modify to spring 3 project

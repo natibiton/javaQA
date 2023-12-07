@@ -42,8 +42,9 @@ public class NoteTests extends BaseTest {
         Note responseNote = notesApi.createNote(note, testUser.getToken());
 
         System.out.println("Created note is: " + responseNote);
+        testUser.addUserNote(responseNote); //Only add the note to the test user if the operation of the creation was a success
 
-        Note getResponseNote = notesApi.getNote(testUser, responseNote);
+        Note getResponseNote = notesApi.getNote(testUser.getToken(), responseNote.getId());
         System.out.println(String.format("Note from application by {} id is {}", testUser.getId(), getResponseNote));
     }
 

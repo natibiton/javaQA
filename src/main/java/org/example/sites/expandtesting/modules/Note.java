@@ -33,6 +33,21 @@ public class Note {
         generateRandomNote();
     }
 
+    /**
+     * Copy constructor
+     * @param note The note to create a copy from
+     */
+    public Note(Note note){
+        this.title = note.title;
+        this.description = note.description;
+        this.category = note.category;
+        this.id = note.id;
+        this.completed = note.completed;
+        this.createdAt = note.createdAt;
+        this.updatedAt = note.updatedAt;
+        this.userId = note.userId;
+    }
+
     private void generateRandomNote() {
         this.title = "Test note: " + RandomStringUtils.randomAlphabetic(5);
         this.description = "Test description" + RandomStringUtils.randomAlphabetic(5);

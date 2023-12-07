@@ -49,8 +49,8 @@ public class NotesApi extends BaseApiActions {
         return responseNotes;
     }
 
-    public Note getNote(User inputUser, Note inputNote){
-        Response response = invokeNoteGetSpecific(null, inputNote.getId(), inputUser.getToken(), 200);
+    public Note getNote(String userToken, String noteId){
+        Response response = invokeNoteGetSpecific(null, noteId, userToken, 200);
         JsonPath jsonPath = response.jsonPath();
         Note responseNote = jsonPath.getObject("data", Note.class);
 
@@ -62,6 +62,7 @@ public class NotesApi extends BaseApiActions {
         return responseNote;
     }
 
+    //TODO update the below by the new structure of the User class
     public Note updateNote(User inputUser, Note inputNote){
         Response response = invokeNotePut(null, inputNote.getId(), inputNote, inputUser.getToken(), 200);
         JsonPath jsonPath = response.jsonPath();
