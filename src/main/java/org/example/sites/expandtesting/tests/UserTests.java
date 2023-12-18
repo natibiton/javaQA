@@ -14,13 +14,13 @@ public class UserTests extends BaseTest {
      * User to be shared among the various tests instead of creating a new one
      */
     private User testUser;
+    private UsersApi usersApi = new UsersApi();
 
     @Test(groups = {TestGroups.API, TestGroups.SANITY }, priority = 1)
     public void createUser() {
         HealthCheckApi healthCheckApi = new HealthCheckApi();
         healthCheckApi.appHealthCheck();
 
-        UsersApi usersApi = new UsersApi();
         User inputUser = new User();
         User responseUser = usersApi.registerUser(inputUser);
         Report.log(String.format("Created the user of: ", responseUser));
@@ -30,7 +30,6 @@ public class UserTests extends BaseTest {
 
     @Test(groups = {TestGroups.API, TestGroups.ERROR_SCENARIO })
     public void createUserFailures() {
-        UsersApi usersApi = new UsersApi();
         User inputUser = new User();
         inputUser.setPassword("2121"); //Less than 6 characters
         usersApi.failUserRegistration(inputUser, "Password must be between 6 and 30 characters");
@@ -44,7 +43,6 @@ public class UserTests extends BaseTest {
 
     @Test(groups = {TestGroups.API, TestGroups.ERROR_SCENARIO })
     public void userLoginFailures() {
-        UsersApi usersApi = new UsersApi();
         User inputUser = new User();
         User responseUser = usersApi.registerUser(inputUser);
 
@@ -59,7 +57,6 @@ public class UserTests extends BaseTest {
 
     @Test(groups = {TestGroups.API, TestGroups.SANITY} , priority = 2)
     public void loginToApp(){
-        UsersApi usersApi = new UsersApi();
         usersApi.userLogin(testUser);
         Report.log(String.format("User logged in: ", testUser));
         System.out.println("User = "+ testUser);
@@ -67,7 +64,6 @@ public class UserTests extends BaseTest {
 
     @Test(groups = {TestGroups.API, TestGroups.REGRESSION}, priority = 3)
     public void getAndUpdateUserProfile(){
-        UsersApi usersApi = new UsersApi();
         System.out.println("User = "+ testUser);
         User responseUser = usersApi.getUserProfile(testUser);
         System.out.println("Response User = "+ responseUser);
@@ -84,7 +80,6 @@ public class UserTests extends BaseTest {
 
     @Test(groups = {TestGroups.API, TestGroups.ERROR_SCENARIO})
     public void updateProfileError(){
-        UsersApi usersApi = new UsersApi();
         User inputUser = new User();
         User responseUser = usersApi.registerUser(inputUser);
         usersApi.userLogin(responseUser);
@@ -93,7 +88,6 @@ public class UserTests extends BaseTest {
 
     @Test(groups = {TestGroups.API, TestGroups.SANITY}, priority = 4)
     public void logoutFromApp(){
-        UsersApi usersApi = new UsersApi();
         usersApi.logout(testUser);
         Report.log(String.format("User logged out: ", testUser));
         System.out.println("User = "+ testUser);
@@ -101,8 +95,6 @@ public class UserTests extends BaseTest {
 
     @Test(groups = {TestGroups.API, TestGroups.SANITY}, priority = 5)
     public void deleteUser(){
-        UsersApi usersApi = new UsersApi();
-
         //User must be logged in before running the delete user for some reason (token expiration)
         usersApi.userLogin(testUser);
 

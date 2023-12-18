@@ -8,17 +8,19 @@ import org.example.sites.expandtesting.modules.User;
 import org.testng.Assert;
 
 /**
- * @Notes
+ * <p>Notes</p>
  * <ul>
  *     <li>There seems to be some bug with the change password, so that API does not appear here</ul>
  * </ul>
  */
 public class UsersApi extends BaseApiActions {
+    private final String USERS_PATH = "users/";
+
     /**
      * Register/add a new user
      * @param inputUser The user details to register
      * @return The response user from the application
-     * @Notes:
+     * <p>Notes</p>
      * <ul>
      *     <li>Will perform validation that the response values correspond to the input user</li>
      *     <li>Will add the user id from the response user to the input user and will add the input user password to the response user</li>
@@ -48,7 +50,7 @@ public class UsersApi extends BaseApiActions {
      * Login to the application
      *
      * @param inputUser The user credentials for the login
-     * @Notes Will modify the inputUser object by adding the login token
+     * <p>Notes</p> Will modify the inputUser object by adding the login token
      */
     public void userLogin(User inputUser){
         JsonPath jsonPath = invokeAndValidateMessage(Method.POST, "login", inputUser, 200, "Login successful");
@@ -81,7 +83,7 @@ public class UsersApi extends BaseApiActions {
     /**
      * Logout from the application
      * @param inputUser The user to logout
-     * @Notes Will remove the token value from the input user once logged out since it's no longer valid
+     * <p>Notes</p> Will remove the token value from the input user once logged out since it's no longer valid
      */
     public void logout(User inputUser){
         invokeAndValidateMessage(Method.DELETE, "logout", inputUser, 200, "User has been successfully logged out");
@@ -91,7 +93,7 @@ public class UsersApi extends BaseApiActions {
     /**
      * Logout from the application
      * @param inputUser The user to logout
-     * @Notes Will remove the token value from the input user once logged out since it's no longer valid
+     * <p>Notes</p> Will remove the token value from the input user once logged out since it's no longer valid
      */
     public void deleteUser(User inputUser){
         invokeAndValidateMessage(Method.DELETE, "delete-account", inputUser, 200, "Account successfully deleted");
@@ -109,19 +111,13 @@ public class UsersApi extends BaseApiActions {
      */
     private JsonPath invokeAndValidateMessage(Method method, String resourcePath, User inputUser, int expectedStatusCode, String expectedMessage){
         Response response;
+        String url = this.baseEndPoint  + USERS_PATH + resourcePath;
+
         switch(method){
-            case GET -> {
-                response = invokeUserGet(resourcePath, inputUser.getToken(), expectedStatusCode);
-            }
-            case POST -> {
-                response = invokeUserPost(resourcePath, inputUser, expectedStatusCode);
-            }
-            case DELETE -> {
-                response = invokeUserDelete(resourcePath, inputUser.getToken(), expectedStatusCode);
-            }
-            case PATCH -> {
-                response = invokeUserPatch(resourcePath, inputUser, expectedStatusCode);
-            }
+            case GET -> response = invokeGetWithToken(url, inputUser.getToken(), expectedStatusCode);
+            case POST -> response = invokePost(null, url, inputUser, expectedStatusCode);
+            case DELETE -> response = invokeDelete(url, inputUser.getToken(), expectedStatusCode);
+            case PATCH -> response = invokePatch(url, inputUser, inputUser.getToken(),expectedStatusCode);
             default -> throw new RuntimeException(String.format("No support for the REST method of {}", method));
         }
         JsonPath jsonPath = response.jsonPath();

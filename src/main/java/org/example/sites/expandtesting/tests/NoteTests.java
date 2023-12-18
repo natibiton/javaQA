@@ -1,6 +1,5 @@
 package org.example.sites.expandtesting.tests;
 
-import org.checkerframework.checker.units.qual.N;
 import org.example.core.report.Report;
 import org.example.core.tests.BaseTest;
 import org.example.core.tests.TestGroups;
@@ -14,12 +13,13 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+//TODO add error tests
 public class NoteTests extends BaseTest {
     /**
      * User to be shared among the various tests instead of creating a new one
      */
-    private User testUser;
-    private NotesApi notesApi;
+    private final User testUser;
+    private final NotesApi notesApi;
 
     /**
      * Create a test user for the note tests
@@ -31,11 +31,11 @@ public class NoteTests extends BaseTest {
         UsersApi usersApi = new UsersApi();
         User inputUser = new User();
         User responseUser = usersApi.registerUser(inputUser);
-        Report.log(String.format("Created the user of: ", responseUser));
+        Report.log(String.format("Created the user of: {}", responseUser));
         System.out.println("User = "+ responseUser);
         testUser = responseUser;
         usersApi.userLogin(testUser);
-        Report.log(String.format("User logged in: ", testUser));
+        Report.log(String.format("User logged in: {}", testUser));
         System.out.println("User = "+ testUser);
 
         notesApi = new NotesApi();
