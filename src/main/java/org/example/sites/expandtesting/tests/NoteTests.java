@@ -19,7 +19,11 @@ public class NoteTests extends BaseTest {
      * User to be shared among the various tests instead of creating a new one
      */
     private User testUser;
+    private NotesApi notesApi;
 
+    /**
+     * Create a test user for the note tests
+     */
     public NoteTests(){
         HealthCheckApi healthCheckApi = new HealthCheckApi();
         healthCheckApi.appHealthCheck();
@@ -33,11 +37,12 @@ public class NoteTests extends BaseTest {
         usersApi.userLogin(testUser);
         Report.log(String.format("User logged in: ", testUser));
         System.out.println("User = "+ testUser);
+
+        notesApi = new NotesApi();
     }
 
     @Test(groups = {TestGroups.API, TestGroups.SANITY }, priority = 1)
     public void createNote() {
-        NotesApi notesApi = new NotesApi();
         Note note = new Note();
         Note responseNote = notesApi.createNote(note, testUser.getToken());
 
@@ -50,12 +55,42 @@ public class NoteTests extends BaseTest {
 
     @Test(groups = {TestGroups.API, TestGroups.SANITY }, priority = 2)
     public void getAllNotes() {
-        NotesApi notesApi = new NotesApi();
         List<Note> responseNotes = notesApi.getAllNotes(testUser);
 
         System.out.println("Note list size is " + responseNotes.size());
 
         Assert.assertEquals(responseNotes.size(), 1);
+    }
+
+    @Test(groups = {TestGroups.API, TestGroups.REGRESSION}, priority = 3)
+    public void testUpdateAndDeleteNote(){
+        int currentUserNoteAmount = testUser.getUserNotesAmount();
+
+        Note newNote = new Note();
+        Note responseNote = notesApi.createNote(newNote, testUser.getToken());
+        System.out.println("Created note: " + responseNote);
+
+        testUser.addUserNote(responseNote);
+        Assert.assertEquals(testUser.getUserNotesAmount(), currentUserNoteAmount + 1,
+                String.format("The expected user notes amount should be {} but was {}", currentUserNoteAmount + 1, testUser.getUserNotesAmount()));
+
+        responseNote.setDescription("Updated description for testing");
+        Note updatedNote = notesApi.updateNote(testUser, responseNote);
+        testUser.addUserNote(updatedNote);
+
+        Assert.assertEquals(testUser.getUserNotesAmount(), currentUserNoteAmount + 1,
+                String.format("The expected user notes amount should be {} but was {}", currentUserNoteAmount + 1, testUser.getUserNotesAmount()));
+
+
+        notesApi.deleteNote(testUser, responseNote);
+        Assert.assertEquals(testUser.getUserNotesAmount(), currentUserNoteAmount, "The expected user note amount should be " + currentUserNoteAmount);
+    }
+
+    @Test(groups = {TestGroups.API, TestGroups.REGRESSION}, priority = 4)
+    public void testUpdateNoteStatus(){
+        Note responseNote = notesApi.updateNoteStatus(testUser, testUser.getUserNotes().get(0));
+        System.out.println("Updated note status: " + responseNote);
+        testUser.addUserNote(responseNote);
     }
 
 }

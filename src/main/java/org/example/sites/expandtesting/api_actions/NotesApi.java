@@ -19,7 +19,7 @@ public class NotesApi extends BaseApiActions {
         Note responseNote = jsonPath.getObject("data", Note.class);
 
         String message = jsonPath.get("message");
-        Assert.assertEquals(message, "Successful Request");
+        Assert.assertEquals(message, "Note successfully created");
 
         Assert.assertNotNull(responseNote.getId(), "The ID field can't be empty for note creation");
         Assert.assertNotNull(responseNote.getCreatedAt(), "The creation date field can't be empty for note creation");
@@ -55,47 +55,69 @@ public class NotesApi extends BaseApiActions {
         Note responseNote = jsonPath.getObject("data", Note.class);
 
         String message = jsonPath.get("message");
-        Assert.assertEquals(message, "Successful Request");
+        Assert.assertEquals(message, "Note successfully retrieved");
 
         Assert.assertNotNull(responseNote);
 
         return responseNote;
     }
 
-    //TODO update the below by the new structure of the User class
+    /**
+     * Update the note details
+     * @param inputUser The logged-in user
+     * @param inputNote The input note to update
+     * @return The response note
+     * @Notes: Will not update the note object in the user object
+     */
     public Note updateNote(User inputUser, Note inputNote){
         Response response = invokeNotePut(null, inputNote.getId(), inputNote, inputUser.getToken(), 200);
         JsonPath jsonPath = response.jsonPath();
         Note responseNote = jsonPath.getObject("data", Note.class);
 
         String message = jsonPath.get("message");
-        Assert.assertEquals(message, "Successful Request");
+        Assert.assertEquals(message, "Note successfully Updated");
 
         Assertions.assertThat(responseNote).usingRecursiveComparison().comparingOnlyFields("title", "description", "category", "completed").isEqualTo(inputNote);
 
         return responseNote;
     }
 
+    /**
+     * Update the note status
+     * @param inputUser The logged-in user
+     * @param inputNote The input note to update status for
+     * @return The response note
+     * @Notes: Will not update the note object in the user object
+     */
     public Note updateNoteStatus(User inputUser,Note inputNote){
+        inputNote.setCompleted(Boolean.TRUE);
         Response response = invokeNotePatch(null, inputNote.getId(), inputNote, inputUser.getToken(), 200);
         JsonPath jsonPath = response.jsonPath();
         Note responseNote = jsonPath.getObject("data", Note.class);
 
         String message = jsonPath.get("message");
-        Assert.assertEquals(message, "Note successfully updated");
+        Assert.assertEquals(message, "Note successfully Updated");
 
-        Assertions.assertThat(responseNote).usingRecursiveComparison().comparingOnlyFields("title", "description", "category", "completed", "user_id").isEqualTo(inputNote);
+        Assertions.assertThat(responseNote).usingRecursiveComparison().ignoringFields("updatedAt").isEqualTo(inputNote);
+        Assert.assertTrue(responseNote.getUpdatedAt().after(inputNote.getUpdatedAt()));
 
         return responseNote;
     }
 
+    /**
+     * Delete a note
+     * @param inputUser The logged-in user
+     * @param inputNote The input note to delete
+     * @Notes: Will remove the note object in the user object
+     */
     public void deleteNote(User inputUser,Note inputNote){
         Response response = invokeNoteDelete(null, inputNote.getId(), inputUser.getToken(), 200);
         JsonPath jsonPath = response.jsonPath();
 
         String message = jsonPath.get("message");
-        Assert.assertEquals(message, "Successful Request");
+        Assert.assertEquals(message, "Note successfully deleted");
         Assert.assertEquals(jsonPath.getBoolean("success"), Boolean.TRUE);
+        inputUser.removeUserNote(inputNote.getId());
     }
 
 }
