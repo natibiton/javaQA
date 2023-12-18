@@ -18,18 +18,18 @@ public class BaseApiActions extends BaseAbstractApiActions {
         super("https://practice.expandtesting.com/notes/api/");
     }
 
-    public Response invokeBasicGet(Map<String, String> headers, String resourcePath, int expectedStatusCode){
+    public Response invokeBasicGet(String resourcePath, int expectedStatusCode){
         Response response = given()
-                .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
+                .headers(getHeaders())
                 .when().get(this.baseEndPoint + resourcePath);
         response.then().statusCode(expectedStatusCode);
 
         return response;
     }
 
-    public Response invokeUserPost(Map<String, String> headers, String resourcePath, User user, int expectedStatusCode){
+    public Response invokeUserPost(String resourcePath, User user, int expectedStatusCode){
         Response response = given()
-                .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
+                .headers(getHeaders())
                 .body(user)
                 .when().post(this.baseEndPoint  + USERS_PATH + resourcePath);
         response.then().statusCode(expectedStatusCode);
@@ -37,9 +37,11 @@ public class BaseApiActions extends BaseAbstractApiActions {
         return response;
     }
 
-    public Response invokeNotePost(Map<String, String> headers, String resourcePath, Note note, int expectedStatusCode){
+    public Response invokeNotePost(String resourcePath, String token, Note note, int expectedStatusCode){
+        Map<String, String> headersWithToken = this.getHeaders();
+        headersWithToken.put("x-auth-token", token);
         Response response = given()
-                .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
+                .headers(headersWithToken)
                 .body(note)
                 .when().post(this.baseEndPoint  + NOTES_PATH + resourcePath);
         response.then().statusCode(expectedStatusCode);
@@ -47,12 +49,12 @@ public class BaseApiActions extends BaseAbstractApiActions {
         return response;
     }
 
-    public Response invokeUserDelete(Map<String, String> headers, String resourcePath, String token, int expectedStatusCode){
+    public Response invokeUserDelete(String resourcePath, String token, int expectedStatusCode){
         Map<String, String> headersWithToken = this.getHeaders();
         headersWithToken.put("x-auth-token", token);
 
         Response response = given()
-                .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
+                .headers(getHeaders())
                 .when().delete(this.baseEndPoint  + USERS_PATH + resourcePath);
         response.then().statusCode(expectedStatusCode);
 
@@ -60,43 +62,41 @@ public class BaseApiActions extends BaseAbstractApiActions {
     }
 
     /**
-     *
-     * @param headers
-     * @param resourcePath The note id
+     * @param resourcePath       The note id
      * @param token
      * @param expectedStatusCode
      * @return
      */
-    public Response invokeNoteDelete(Map<String, String> headers, String resourcePath, String token, int expectedStatusCode){
+    public Response invokeNoteDelete(String resourcePath, String token, int expectedStatusCode){
         Map<String, String> headersWithToken = this.getHeaders();
         headersWithToken.put("x-auth-token", token);
 
         Response response = given()
-                .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
+                .headers(getHeaders())
                 .when().delete(this.baseEndPoint  + NOTES_PATH + resourcePath);
         response.then().statusCode(expectedStatusCode);
 
         return response;
     }
 
-    public Response invokeUserGet(Map<String, String> headers, String resourcePath, String token, int expectedStatusCode){
+    public Response invokeUserGet(String resourcePath, String token, int expectedStatusCode){
         Map<String, String> headersWithToken = this.getHeaders();
         headersWithToken.put("x-auth-token", token);
 
         Response response = given()
-                .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
+                .headers(getHeaders())
                 .when().get(this.baseEndPoint  + USERS_PATH + resourcePath);
         response.then().statusCode(expectedStatusCode);
 
         return response;
     }
 
-    public Response invokeNoteGet(Map<String, String> headers, String resourcePath, String token, int expectedStatusCode){
+    public Response invokeNoteGet(String resourcePath, String token, int expectedStatusCode){
         Map<String, String> headersWithToken = this.getHeaders();
         headersWithToken.put("x-auth-token", token);
 
         Response response = given()
-                .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
+                .headers(getHeaders())
                 .when().get(this.baseEndPoint  + NOTES_PATH + resourcePath);
         response.then().statusCode(expectedStatusCode);
 
@@ -104,19 +104,17 @@ public class BaseApiActions extends BaseAbstractApiActions {
     }
 
     /**
-     *
-     * @param headers
-     * @param resourcePath The ID of the note
+     * @param resourcePath       The ID of the note
      * @param token
      * @param expectedStatusCode
      * @return
      */
-    public Response invokeNoteGetSpecific(Map<String, String> headers, String resourcePath, String token, int expectedStatusCode){
+    public Response invokeNoteGetSpecific(String resourcePath, String token, int expectedStatusCode){
         Map<String, String> headersWithToken = this.getHeaders();
         headersWithToken.put("x-auth-token", token);
 
         Response response = given()
-                .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
+                .headers(getHeaders())
                 .when().get(this.baseEndPoint  + NOTES_PATH + resourcePath);
         response.then().statusCode(expectedStatusCode);
 
@@ -124,20 +122,18 @@ public class BaseApiActions extends BaseAbstractApiActions {
     }
 
     /**
-     *
-     * @param headers
-     * @param resourcePath The note id
+     * @param resourcePath       The note id
      * @param note
      * @param token
      * @param expectedStatusCode
      * @return
      */
-    public Response invokeNotePut(Map<String, String> headers, String resourcePath, Note note, String token, int expectedStatusCode){
+    public Response invokeNotePut(String resourcePath, Note note, String token, int expectedStatusCode){
         Map<String, String> headersWithToken = this.getHeaders();
         headersWithToken.put("x-auth-token", token);
 
         Response response = given()
-                .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
+                .headers(getHeaders())
                 .body(note)
                 .when().put(this.baseEndPoint  + NOTES_PATH + resourcePath);
         response.then().statusCode(expectedStatusCode);
@@ -145,12 +141,12 @@ public class BaseApiActions extends BaseAbstractApiActions {
         return response;
     }
 
-    public Response invokeNotePatch(Map<String, String> headers, String resourcePath, Note note, String token, int expectedStatusCode){
+    public Response invokeNotePatch(String resourcePath, Note note, String token, int expectedStatusCode){
         Map<String, String> headersWithToken = this.getHeaders();
         headersWithToken.put("x-auth-token", token);
 
         Response response = given()
-                .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
+                .headers(getHeaders())
                 .body(note)
                 .when().patch(this.baseEndPoint  + NOTES_PATH + resourcePath);
         response.then().statusCode(expectedStatusCode);
@@ -158,12 +154,12 @@ public class BaseApiActions extends BaseAbstractApiActions {
         return response;
     }
 
-    public Response invokeUserPatch(Map<String, String> headers, String resourcePath, User inputUser, int expectedStatusCode){
+    public Response invokeUserPatch(String resourcePath, User inputUser, int expectedStatusCode){
         Map<String, String> headersWithToken = this.getHeaders();
         headersWithToken.put("x-auth-token", inputUser.getToken());
 
         Response response = given()
-                .headers(Optional.ofNullable(headers).orElseGet(super::getHeaders))
+                .headers(getHeaders())
                 .body(inputUser)
                 .when().patch(this.baseEndPoint  + USERS_PATH + resourcePath);
         response.then().statusCode(expectedStatusCode);

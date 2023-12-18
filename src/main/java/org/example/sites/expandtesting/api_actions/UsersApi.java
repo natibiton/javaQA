@@ -111,16 +111,16 @@ public class UsersApi extends BaseApiActions {
         Response response;
         switch(method){
             case GET -> {
-                response = invokeUserGet(null, resourcePath, inputUser.getToken(), expectedStatusCode);
+                response = invokeUserGet(resourcePath, inputUser.getToken(), expectedStatusCode);
             }
             case POST -> {
-                response = invokeUserPost(null, resourcePath, inputUser, expectedStatusCode);
+                response = invokeUserPost(resourcePath, inputUser, expectedStatusCode);
             }
             case DELETE -> {
-                response = invokeUserDelete(null, resourcePath, inputUser.getToken(), expectedStatusCode);
+                response = invokeUserDelete(resourcePath, inputUser.getToken(), expectedStatusCode);
             }
             case PATCH -> {
-                response = invokeUserPatch(null, resourcePath, inputUser, expectedStatusCode);
+                response = invokeUserPatch(resourcePath, inputUser, expectedStatusCode);
             }
             default -> throw new RuntimeException(String.format("No support for the REST method of {}", method));
         }

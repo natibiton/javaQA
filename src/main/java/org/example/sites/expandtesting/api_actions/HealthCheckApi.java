@@ -6,7 +6,7 @@ import org.testng.Assert;
 
 public class HealthCheckApi extends BaseApiActions {
     public void appHealthCheck(){
-        Response response = invokeBasicGet(null, "health-check", 200);
+        Response response = invokeBasicGet("health-check", 200);
 
         JsonPath jsonResponse = response.jsonPath();
         String message = jsonResponse.get("message");
