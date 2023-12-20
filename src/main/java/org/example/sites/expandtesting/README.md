@@ -21,8 +21,8 @@ Using UI: https://practice.expandtesting.com/notes/app/
 14. Via API: Delete user
 
 ## TODO
-1. UT
-2. Logging
+1. Logging
+2. UT
 3. Run TestNG with maven
 4. Test Report with screenshots (see https://www.browserstack.com/docs/automate/selenium/take-screenshots#automatically-capture-screenshots)
 5. Modify to spring 3 project

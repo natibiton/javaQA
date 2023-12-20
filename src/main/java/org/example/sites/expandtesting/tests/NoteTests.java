@@ -13,7 +13,6 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-//TODO add error tests
 public class NoteTests extends BaseTest {
     /**
      * User to be shared among the various tests instead of creating a new one
@@ -84,6 +83,10 @@ public class NoteTests extends BaseTest {
 
         notesApi.deleteNote(testUser, responseNote);
         Assert.assertEquals(testUser.getUserNotesAmount(), currentUserNoteAmount, "The expected user note amount should be " + currentUserNoteAmount);
+
+        List<Note> currentNotes = notesApi.getAllNotes(testUser);
+        Assert.assertEquals(currentNotes.size(), currentUserNoteAmount,
+                String.format("The expected user notes amount should be {} (from the API) but was {}", currentNotes.size(), currentUserNoteAmount));
     }
 
     @Test(groups = {TestGroups.API, TestGroups.REGRESSION}, priority = 4)
@@ -91,6 +94,21 @@ public class NoteTests extends BaseTest {
         Note responseNote = notesApi.updateNoteStatus(testUser, testUser.getUserNotes().get(0));
         System.out.println("Updated note status: " + responseNote);
         testUser.addUserNote(responseNote);
+    }
+
+    @Test(groups = {TestGroups.API, TestGroups.ERROR_SCENARIO}, priority = 5)
+    public void testWrongTokenAddNote(){
+        notesApi.failCreateNote(new Note(), "NotValidToken", 401, "Access token is not valid or has expired, you will need to login");
+    }
+
+    @Test(groups = {TestGroups.API, TestGroups.ERROR_SCENARIO}, priority = 5)
+    public void testWrongNoteId(){
+        Note wrongIdNote = testUser.getUserNotes().get(0);
+        wrongIdNote.setId(wrongIdNote.getId()+"A");
+
+        notesApi.failUpdateNote(testUser, wrongIdNote, 400, "Note ID must be a valid ID");
+        notesApi.failGetNote(testUser.getToken(), wrongIdNote.getId(), 400, "Note ID must be a valid ID");
+        notesApi.failDeleteNote(testUser, wrongIdNote, 400, "Note ID must be a valid ID");
     }
 
 }
