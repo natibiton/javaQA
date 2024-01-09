@@ -7,7 +7,12 @@ import org.example.core.tests.TestGroups;
 import org.example.sites.expandtesting.api_actions.HealthCheckApi;
 import org.example.sites.expandtesting.api_actions.UsersApi;
 import org.example.sites.expandtesting.modules.User;
+import org.example.sites.expandtesting.web.pages.IntroPage;
+import org.example.sites.expandtesting.web.pages.LoginPage;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
+
+import java.util.concurrent.TimeUnit;
 
 public class UserTests extends BaseTest {
     /**
@@ -76,6 +81,23 @@ public class UserTests extends BaseTest {
         User responseUser2 = usersApi.getUserProfile(testUser);
 
         Assertions.assertThat(responseUser2).usingRecursiveComparison().ignoringFields("password", "token").isEqualTo(testUser);
+    }
+
+    //TODO move to a new test class, we want to control the UI only user state on it's own test class, this is not E2E...
+    @Test(groups = {TestGroups.GUI, TestGroups.SANITY}, priority = 3)
+    public void loginToUI(){
+        WebDriver webDriver = createWebDriver();
+        IntroPage introPage = new IntroPage(webDriver);
+
+        LoginPage loginPage = introPage.clickLoginButton();
+        //User = User(name=dKrmRyn, email=dkrmryn@gmail.com, password=b61Kql, id=659d0e74da3d7a01419455d5, token=null, phone=null, company=null, userNotes=[])
+        loginPage.login(testUser.getEmail(), testUser.getPassword());
+        //TODO remove the below, just while implementing...
+        try {
+            TimeUnit.SECONDS.sleep(10);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test(groups = {TestGroups.API, TestGroups.ERROR_SCENARIO})

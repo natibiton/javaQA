@@ -1,7 +1,7 @@
 package org.example.sites.expandtesting.web.pages;
 
 import org.example.core.web.BasePage;
-import org.example.core.web.BaseWebDriver;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -21,15 +21,15 @@ public class IntroPage extends BasePage {
     @FindBy(xpath = "//h1[contains(text(), 'Welcome to Notes App')]")
     private WebElement welcomeText;
 
-    public IntroPage(BaseWebDriver baseWebDriver) {
-        super(baseWebDriver, baseUrl, "Test Automation Practice: Working with My Notes React App");
+    public IntroPage(WebDriver webDriver) {
+        super(webDriver, baseUrl, "Test Automation Practice: Working with My Notes React App");
         browseToBasePage(); //Since this is the initial window, we would like to browse here first
-        wait.until(ExpectedConditions.visibilityOf(welcomeText));
+        validateBasePage(welcomeText);
     }
 
-    public void login(){
-        createAccountBtn.click();
-        // TODO return new IntroPage(this.webDriver);
+    public LoginPage clickLoginButton(){
+        loginBtn.click();
+        return new LoginPage(this.webDriver);
     }
 
     public void createAccount(){
@@ -38,5 +38,10 @@ public class IntroPage extends BasePage {
 
     public void forgotPassword(){
         forgotPasswordBtn.click();
+    }
+
+    @Override
+    public void validateBasePage(WebElement elementToFind) {
+        wait.until(ExpectedConditions.visibilityOf(elementToFind));
     }
 }
